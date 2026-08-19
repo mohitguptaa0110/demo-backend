@@ -11,6 +11,8 @@ async function bootstrap() {
       transform: true,
     }),
   );
+  app.enableCors();
+  // console.log('JWT SECRET:', process.env.JWT_SECRET);
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

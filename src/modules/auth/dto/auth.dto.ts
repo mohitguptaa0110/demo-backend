@@ -37,6 +37,13 @@ export class RegisterDto {
 
     @IsNotEmpty()
     @IsString()
+    @Matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/,
+        {
+            message:
+                'Confirm Password must contain uppercase, lowercase, number and special character',
+        },
+    )
     confirmPassword: string;
 }
 

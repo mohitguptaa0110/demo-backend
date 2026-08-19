@@ -7,6 +7,7 @@ import { entities } from './entity';
 import { UserModule } from './modules/user/user.module';
 import { modules } from './modules';
 import { AuthModule } from './modules/auth/auth.module';
+import { CoursesModule } from './modules/courses/courses.module';
 
 @Module({
   imports: [

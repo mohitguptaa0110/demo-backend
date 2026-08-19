@@ -2,12 +2,15 @@ import { BadRequestException, ConflictException, Injectable, UnauthorizedExcepti
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/entity/user.model';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
+import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectModel(User)
     private readonly userModel: typeof User,
+    private readonly jwtService: JwtService,
   ) { }
 
   async register(registerDto: RegisterDto) {
@@ -45,13 +48,15 @@ export class AuthService {
       throw new ConflictException('Phone number already exists');
     }
 
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const user = await this.userModel.create({
       firstName,
       lastName,
       email,
       phone,
       address,
-      password,
+      password: hashedPassword,
     });
 
     return user;
@@ -70,12 +75,24 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
     }
-
-    if (user.password !== password) {
-      throw new UnauthorizedException()
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      user.password,
+    );
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid email or password');
     }
 
-    return user;
+    const payload = {
+      sub: user.id,
+      email: user.email,
+    };
+
+    const accessToken = this.jwtService.sign(payload);
+
+    return {
+      access_token: accessToken,
+    };
   }
 
 }
