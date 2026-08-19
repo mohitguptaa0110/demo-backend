@@ -1,7 +1,7 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Course } from 'src/entity/course.model';
-import { CreateCourseDto } from './dto/course.dto';
+import { CreateCourseDto, UpdateCourseDto } from './dto/course.dto';
 
 @Injectable()
 export class CoursesService {
@@ -34,7 +34,39 @@ export class CoursesService {
   //READ ALL
   async findAll() {
     return this.courseModel.findAll({
-      order: [['createdAt', 'DESC']],
+      order: [['createdAt', 'ASC']],
     });
+  }
+
+  // READ ONE
+  async findOne(id: number) {
+    const course = await this.courseModel.findByPk(id);
+
+    if (!course) {
+      throw new NotFoundException('Course not found');
+    }
+
+    return course;
+  }
+
+  // UPDATE
+  async update(id: number, updateCourseDto: UpdateCourseDto) {
+    // const { name, code, duration, description } = updateCourseDto;
+    const course = await this.findOne(id);
+
+    await course.update(updateCourseDto);
+
+    return course;
+  }
+
+  // SOFT DELETE
+  async remove(id: number) {
+    const course = await this.findOne(id);
+
+    await course.destroy();
+
+    return {
+      message: 'Course deleted successfully',
+    };
   }
 }

@@ -22,3 +22,22 @@ export class CreateCourseDto {
   @IsString()
   description?: string;
 }
+
+export class UpdateCourseDto {
+
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @IsOptional()
+  @IsString()
+  code?: string;
+
+  @IsOptional()
+  @IsString()
+  duration?: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+}
