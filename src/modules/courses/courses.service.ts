@@ -36,12 +36,29 @@ export class CoursesService {
   }
 
   //READ ALL
-  async findAll(offset: number, limit: number) {
+  async findAll(
+    offset: number,
+    limit: number,
+    sortColumn: string,
+    sortDirection: string,
+  ) {
+    const allowedColumns = ['id', 'name', 'code', 'duration'];
+
+    const column = allowedColumns.includes(sortColumn ?? '')
+      ? sortColumn!
+      : 'id';
+
+    const direction = sortDirection === 'DESC' ? 'DESC' : 'ASC';
+
     const { rows, count } = await this.courseModel.findAndCountAll({
-      limit,
+      where: {
+        deletedAt: null,
+      },
       offset,
-      order: [['id', 'ASC']],
+      limit,
+      order: [[column, direction]],
     });
+
     return {
       data: rows,
       total: count,
