@@ -1,4 +1,8 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Course } from 'src/entity/course.model';
 import { CreateCourseDto, UpdateCourseDto } from './dto/course.dto';
@@ -32,10 +36,16 @@ export class CoursesService {
   }
 
   //READ ALL
-  async findAll() {
-    return this.courseModel.findAll({
-      order: [['createdAt', 'ASC']],
+  async findAll(offset: number, limit: number) {
+    const { rows, count } = await this.courseModel.findAndCountAll({
+      limit,
+      offset,
+      order: [['id', 'ASC']],
     });
+    return {
+      data: rows,
+      total: count,
+    };
   }
 
   // READ ONE

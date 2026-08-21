@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { CoursesService } from './courses.service';
@@ -23,8 +24,10 @@ export class CoursesController {
     return this.coursesService.create(createCourseDto);
   }
   @Get()
-  findAll() {
-    return this.coursesService.findAll();
+  findAll(@Query('offset') offset = '0', @Query('limit') limit: '10') {
+    const parsedOffset = Math.max(Number(offset), 0);
+    const parsedLimit = Math.min(Math.max(Number(limit), 1), 100);
+    return this.coursesService.findAll(parsedOffset, parsedLimit);
   }
 
   @Patch(':id')
