@@ -3,25 +3,25 @@ import { IsEmail, IsNotEmpty, IsString, Matches, MinLength } from "class-validat
 export class RegisterDto {
     @IsNotEmpty()
     @IsString()
-    firstName: string;
+    firstName!: string;
 
     @IsNotEmpty()
     @IsString()
-    lastName: string;
+    lastName!: string;
 
     @IsNotEmpty()
     @IsEmail({},{message:'Please enter a valid email'})
-    email: string;
+    email!: string;
 
     @IsNotEmpty()
     @Matches(/^[0-9]{10}$/, {
         message: 'Phone number must be exactly 10 digits',
     })
-    phone: string;
+    phone!: string;
 
     @IsNotEmpty()
     @IsString()
-    address: string;
+    address!: string;
 
     @IsNotEmpty()
     @IsString()
@@ -33,7 +33,7 @@ export class RegisterDto {
                 'Password must contain uppercase, lowercase, number and special character',
         },
     )
-    password: string;
+    password!: string;
 
     @IsNotEmpty()
     @IsString()
@@ -44,16 +44,16 @@ export class RegisterDto {
                 'Confirm Password must contain uppercase, lowercase, number and special character',
         },
     )
-    confirmPassword: string;
+    confirmPassword!: string;
 }
 
 export class LoginDto {
 
     @IsNotEmpty()
     @IsEmail({},{message:'Please enter a valid email'})
-    email: string;
+    email!: string;
 
     @IsNotEmpty()
     @IsString()
-    password: string;
+    password!: string;
 }
