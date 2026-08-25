@@ -1,7 +1,4 @@
-import { Course } from "./course.model";
-import { User } from "./user.model";
+import { Course } from './course.entity';
+import { User } from './user.entity';
 
-export const entities = [
-    User,
-    Course
-]
+export const entities = [User, Course];

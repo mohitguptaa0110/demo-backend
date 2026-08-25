@@ -7,41 +7,57 @@ import {
   IsInt,
   Max,
   Min,
+  MinLength,
+  MaxLength,
 } from 'class-validator';
 
 export class CreateCourseDto {
   @IsString()
   @IsNotEmpty()
+  @MinLength(2)
+  @MaxLength(50)
   name!: string;
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(2)
+  @MaxLength(20)
   code!: string;
 
   @IsString()
   @IsNotEmpty()
+  @MinLength(1)
+  @MaxLength(50)
   duration!: string;
 
   @IsOptional()
   @IsString()
+  @MaxLength(500)
   description?: string;
 }
 
 export class UpdateCourseDto {
   @IsOptional()
   @IsString()
+  @MinLength(2)
+  @MaxLength(50)
   name?: string;
 
   @IsOptional()
   @IsString()
+  @MinLength(2)
+  @MaxLength(20)
   code?: string;
 
   @IsOptional()
   @IsString()
+  @MinLength(1)
+  @MaxLength(50)
   duration?: string;
 
   @IsOptional()
   @IsString()
+  @MaxLength(500)
   description?: string;
 }
 
@@ -61,8 +77,12 @@ export class CourseQueryDto {
 
   @IsOptional()
   @IsString()
+  search: string = '';
+
+  @IsOptional()
+  @IsString()
   @IsIn(['name', 'code', 'duration'])
-  sortColumn: string = 'id';
+  sortColumn: string = 'name';
 
   @IsOptional()
   @IsIn(['ASC', 'DESC'])

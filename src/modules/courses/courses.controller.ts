@@ -27,25 +27,10 @@ export class CoursesController {
   create(@Body() createCourseDto: CreateCourseDto) {
     return this.coursesService.create(createCourseDto);
   }
-  // @Get()
-  // findAll(
-  //   @Query('offset') offset = '0',
-  //   @Query('limit') limit = '10',
-  //   @Query('sortColumn') sortColumn = '',
-  //   @Query('sortDirection') sortDirection = '',
-  // ) {
-  //   const parsedOffset = Math.max(Number(offset), 0);
-  //   const parsedLimit = Math.min(Math.max(Number(limit), 1), 100);
-  //   return this.coursesService.findAll(parsedOffset, parsedLimit,sortColumn,sortDirection);
-  // }
+  
   @Get()
   findAll(@Query() query: CourseQueryDto) {
-    return this.coursesService.findAll(
-      query.offset,
-      query.limit,
-      query.sortColumn,
-      query.sortDirection,
-    );
+    return this.coursesService.findAll(query);
   }
 
   @Patch(':id')

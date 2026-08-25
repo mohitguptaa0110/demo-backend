@@ -1,9 +1,7 @@
 import { Column, Model, Table, DataType } from 'sequelize-typescript';
 
-@Table({ tableName: 'courses' ,
-  paranoid:true
-})
-export class Course extends Model{
+@Table({ tableName: 'courses', paranoid: true })
+export class Course extends Model {
   @Column({
     type: DataType.INTEGER,
     primaryKey: true,
@@ -17,24 +15,24 @@ export class Course extends Model{
     allowNull: false,
     unique: true,
   })
-  name: string;
+  name!: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
     unique: true,
   })
-  code: string;
+  code!: string;
 
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  duration: string;
+  duration!: string;
 
   @Column({
     type: DataType.TEXT,
     allowNull: true,
   })
-  description: string;
+  description!: string;
 }

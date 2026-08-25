@@ -1,6 +1,11 @@
-import { BadRequestException, ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { User } from 'src/entity/user.model';
+import { User } from 'src/entity/user.entity';
 import { LoginDto, RegisterDto } from './dto/auth.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -11,7 +16,7 @@ export class AuthService {
     @InjectModel(User)
     private readonly userModel: typeof User,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async register(registerDto: RegisterDto) {
     const {
@@ -31,7 +36,7 @@ export class AuthService {
     const existingEmail = await this.userModel.findOne({
       where: {
         email,
-      }
+      },
     });
 
     if (existingEmail) {
@@ -60,7 +65,6 @@ export class AuthService {
     });
 
     return user;
-
   }
 
   async login(loginDto: LoginDto) {
@@ -75,10 +79,7 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
     }
-    const isPasswordValid = await bcrypt.compare(
-      password,
-      user.password,
-    );
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid email or password');
     }
@@ -94,5 +95,4 @@ export class AuthService {
       access_token: accessToken,
     };
   }
-
 }

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from 'src/entity/user.model';
+import { User } from 'src/entity/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth.constants';
 import { AuthGuard } from './auth.gaurd';
@@ -20,9 +20,6 @@ import { AuthGuard } from './auth.gaurd';
   ],
   controllers: [AuthController],
   providers: [AuthService, AuthGuard],
-  exports: [
-    AuthGuard,
-    JwtModule
-  ],
+  exports: [AuthGuard, JwtModule],
 })
 export class AuthModule {}
