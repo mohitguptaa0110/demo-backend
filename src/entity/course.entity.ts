@@ -25,10 +25,10 @@ export class Course extends Model {
   code!: string;
 
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     allowNull: false,
   })
-  duration!: string;
+  duration!: number;
 
   @Column({
     type: DataType.TEXT,

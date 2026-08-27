@@ -24,11 +24,9 @@ export class CreateCourseDto {
   @MaxLength(20)
   code!: string;
 
-  @IsString()
+  @IsInt()
   @IsNotEmpty()
-  @MinLength(1)
-  @MaxLength(50)
-  duration!: string;
+  duration!: number;
 
   @IsOptional()
   @IsString()
@@ -50,9 +48,7 @@ export class UpdateCourseDto {
   code?: string;
 
   @IsOptional()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(50)
+  @IsInt()
   duration?: string;
 
   @IsOptional()
