@@ -81,11 +81,6 @@ export class CoursesService {
             [Op.iLike]: `%${search.trim()}%`,
           },
         },
-        {
-          duration: {
-            [Op.iLike]: `%${search.trim()}%`,
-          },
-        },
       ];
     }
 

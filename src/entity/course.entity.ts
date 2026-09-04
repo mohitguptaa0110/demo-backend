@@ -1,4 +1,5 @@
-import { Column, Model, Table, DataType } from 'sequelize-typescript';
+import { Column, Model, Table, DataType, HasMany } from 'sequelize-typescript';
+import { Subject } from './subject.entity';
 
 @Table({ tableName: 'courses', paranoid: true })
 export class Course extends Model {
@@ -35,4 +36,7 @@ export class Course extends Model {
     allowNull: true,
   })
   description!: string;
+
+  @HasMany(() => Subject)
+  declare subjects?: Subject[];
 }

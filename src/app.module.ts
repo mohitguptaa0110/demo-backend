@@ -5,6 +5,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { ConfigModule } from '@nestjs/config';
 import { entities } from './entity';
 import { modules } from './modules';
+import { SubjectsModule } from './modules/subjects/subjects.module';
 
 
 
